@@ -16,6 +16,13 @@ export const createEnquiry = async (req, res) => {
     //  Save to DB
     const savedEnquiry = await enquiry.save();
 
+    // Send response
+    res.status(201).json({
+      success: true,
+      message: "Enquiry created successfully",
+      enquiry: savedEnquiry,
+    });
+
     //  Send confirmation email to CUSTOMER
     try {
       await sendEnquiryEmail({
@@ -46,13 +53,6 @@ export const createEnquiry = async (req, res) => {
     } catch (mailError) {
       console.error("Admin email failed:", mailError.message);
     }
-
-    // Send response
-    res.status(201).json({
-      success: true,
-      message: "Enquiry created successfully",
-      enquiry: savedEnquiry,
-    });
 
   } catch (error) {
     res.status(500).json({

@@ -14,6 +14,8 @@ export const createSupport = async (req, res) => {
 
     const savedSupport = await support.save();
 
+    res.status(201).json(savedSupport);
+
     // USER EMAIL
     try {
       await sendSupportUserEmail({
@@ -39,8 +41,6 @@ export const createSupport = async (req, res) => {
     } catch (err) {
       console.error("Admin support mail failed:", err.message);
     }
-
-    res.status(201).json(savedSupport);
 
   } catch (error) {
     res.status(500).json({ 

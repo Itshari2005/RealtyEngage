@@ -33,6 +33,8 @@ export const createPayment = async (req, res) => {
       month: paidAmount > 0 ? 1 : 0,
     });
 
+    res.status(201).json(payment);
+
     // USER MAIL
     try {
       await sendPaymentUserEmail({
@@ -65,7 +67,6 @@ export const createPayment = async (req, res) => {
       console.error("Admin payment mail failed:", err.message);
     }
 
-    res.status(201).json(payment);
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server Error" });
